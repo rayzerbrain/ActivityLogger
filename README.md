@@ -6,7 +6,7 @@ All configs and commands are not case sensitive. This being said, if you do not 
 ### In-Depth Information
 This plugin logs all players' total time spent on the server and can also tell you time spent in the last x days, where x is a number of your choosing.
 Plugin uses IP as the unique identifier for each player, and it should be able to differentiate between people with the same ip.
-There is a separate file for each server (if you have multiple), so to see total time across all servers you will have to manually add them up.
+There is a separate file for each server (if you have multiple), so to see total time across all servers you will have to manually add them up (located in the exiled configs folder).
 ### Commands to Use
 activityof <player> 
 This is the only command and main method of retrieving data of a player. Returns multiple sets of data if players with the same username are found. Also returns names of players that contain the input (see above).
