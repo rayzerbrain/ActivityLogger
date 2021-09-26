@@ -11,6 +11,9 @@ activityof <player>
 This is the only command and main method of retrieving data of a player. Returns multiple sets of data if players with the same username are found. Also returns names of players that contain the input (see above).
 ### Configuration
 All configuration can be found in the usual file
-\nIsEnabled (true/false): determines whether plugin is active or not. (Player data will remain in file, but commands and new data won't be recognized)
-\nDays_Previous_Amount (integer): determines how many days 
-\nPlayer_Max_Logs (integer):
+
+IsEnabled (true/false): determines whether plugin is active or not. (Player data will remain in file, but commands and new data won't be recognized)
+
+Days_Previous_Amount (integer): determines the distance the 
+
+Player_Max_Logs (integer):
