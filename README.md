@@ -20,7 +20,7 @@ Days_Previous_Amount (integer): when viewing player data, gives you information 
 Player_Max_Logs (integer): amount of individual logs a player can have for each session (time logged on and off). 
 This only affects the above configuration, so if the Days_Previous_Amount is set higher, this probably should be as well. 
 
-Allowed_Roles (list of words): names of roles you wish to be able to use the activityof command. Role names are listed in the config_remoteadmin.txt file as the badge of the role. Example default values are given, but these can be removed. Create new entries like so:
+Allowed_Roles (list of words): names of roles you wish to be able to use the activityof command. Role names are listed in the config_remoteadmin.txt file as the BADGE of the role. Example default values are given, but these can be removed. Create new entries like so:
 
 allowed_roles:
 
