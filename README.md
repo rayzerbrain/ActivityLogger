@@ -1,6 +1,5 @@
 # ActivityLogger
-STILL WIP
-SCP:SL Exiled plugin that logs a specific players total time on the server
+SCP:SL Exiled plugin that logs a specific players total time on a server. Built for Exiled 3.0, might work on prior versions, not sure.
 ### IMPORTANT
 All configs and commands are not case sensitive. This being said, if you do not enter the exact name of the player with the activityof command, it will not work, but it will give you possible names that CONTAIN your input. For example, if you enter in "activityof john doe" and there is only a player named "jon doe", it will not recognize your input at all. However, if you are more broad and type "doe", it will display all names with the text "doe" inside of it (e.g. "moe doe", "doe the deer", "doeaodffawefihaweifuohawsdaflkj")
 ### In-Depth Information
