@@ -7,7 +7,7 @@ This plugin logs all players' total time spent on the server and can also tell y
 Plugin uses IP as the unique identifier for each player, and it should be able to differentiate between people with the same ip.
 There is a separate file for each server (if you have multiple), so to see total time across all servers you will have to manually add them up (located in the exiled configs folder).
 ### Commands to Use
-activityof [<playerNickname>] 
+activityof [/<playerNickname/>] 
 
 AKA: aof_wipe   
    
