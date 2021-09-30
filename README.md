@@ -17,7 +17,7 @@ actvityof_wipe
    
 AKA: aof_wipe
    
-Command that wipes all logs of 
+Command that wipes all logs of all players. All recent log data is removed and cannot be retrieved again. Should only be removed if file is getting dangerously thicc. (This does not affect saved time in hours of all players, only affects recent hours shown)
 ### Configuration
 All configuration can be found in the usual file
 
