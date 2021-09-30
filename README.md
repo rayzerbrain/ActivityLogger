@@ -26,7 +26,7 @@ IsEnabled (true/false): determines whether plugin is active or not. (Player data
 Days_Previous_Amount (integer): when viewing player data, gives you information about hours this player has in the last x days, where x is what you can change. (default is 30)
 
 Player_Max_Logs (integer): amount of individual logs a player can have for each session (time logged on and off). 
-This only affects the above configuration, so if the Days_Previous_Amount is set higher, this probably should be as well. 
+This only affects the above configuration, so if the Days_Previous_Amount is set higher, this probably should be as well. (default is 45)
 
-Leaderboard_Length (integer): determines length of leaderboard displayed when activityof is used without parameters
+Leaderboard_Length (integer): determines length of leaderboard displayed when activityof is used without parameters (default is 10)
 
