@@ -12,9 +12,9 @@ AKA: aof [playerNickname]
    
 This is the main command and method of retrieving data of a player. Returns multiple sets of data if players with the same username are found. Also returns names of players that contain the input (e.g. if you type "a" it will display all nicknames with "a" in it). IF no parameters are given, it will display a leaderboard of people with the most hours on the server, the length of which is defined in the config file
    
-actvityof_wipe
+actvityof_clean
    
-AKA: aof_wipe
+AKA: aof_clean
    
 Command that wipes all logs of all players. All recent log data is removed and cannot be retrieved again. Should only be removed if file is getting dangerously thicc. (This does not affect saved time in hours of all players, only affects recent hours shown)
 ### Configuration
