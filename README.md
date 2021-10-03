@@ -4,7 +4,7 @@ SCP:SL Exiled plugin that logs a specific players total time on a server. Built 
 As of 3.0.0 this plugin uses exiled permissions. The permission for using the activityof, or aof command is al.get, while the command for wiping (should be more secure) is al.clean. To learn how to add permissions go to the exiled discord or something.
 ### In-Depth Information
 This plugin logs all players' total time spent on the server and can also tell you time spent in the last x days, where x is a number of your choosing.
-There is a separate file for each server (if you have multiple), so to see total time across all servers you will have to manually add them up (located in the exiled configs folder).
+There is a separate file for each server (if you have multiple), so to see total time across all servers you will have to manually add them up (file located in the exiled configs folder).
 ### Commands to Use
 activityof [playerNickname] 
 
