@@ -6,9 +6,6 @@ labels: bug
 assignees: rayzerbrain
 
 ---
-
-Obviously my code is perfect and I never do anything wrong, but if an error occurs anyway, let me know
-
 **Describe the bug**
 What is wrong, or what error messages are you getting? Is the plugin working in the wrong way, or not working at all?
 
