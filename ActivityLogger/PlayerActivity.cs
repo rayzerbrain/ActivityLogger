@@ -103,8 +103,7 @@ namespace ActivityLogger
             return log;
         }
 
-        public static int MaxLogs 
-        { get { return (int)(PluginMain.Instance.Config.Days_Counted * 1.5); }  }
+        public static int MaxLogs => (int)(PluginMain.Instance.Config.Days_Counted * 1.5);
         public static DateTime StringToDate(string str)
         {
             string[] strPieces = str.Split('/');
