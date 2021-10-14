@@ -13,8 +13,7 @@ namespace ActivityLogger.Commands
 
         public string[] Aliases { get; set; } = { "aof" };
 
-        public string Description { get; set; } = "Returns the activity of the player(s) with a specfied nickname." +
-            " If no exact name is found it will display similar names or players that have gone by that name before.";
+        public string Description { get; set; } = "Returns the activity of the player(s) with a specfied nickname.";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
