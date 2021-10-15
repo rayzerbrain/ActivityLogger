@@ -1,5 +1,5 @@
 # ActivityLogger
-SCP:SL Exiled plugin that logs a specific players total time on a server and makes saves that information to a file, which can be utilized with a command.
+SCP:SL Exiled plugin that logs a specific players total time on a server and makes saves that information to a file, which can be utilized with a command. Made for server: (The Crypt)
 ### IMPORTANT
 As of 3.0.0 this plugin uses exiled permissions. The permission for using the activityof, or aof command is al.get, while the command for wiping (should be more secure) is al.clean. To learn how to add permissions or the actual plugin go to the exiled discord or something.
 ### In-Depth Information
