@@ -28,8 +28,8 @@ namespace ActivityLogger
         public void OnVerified(VerifiedEventArgs ev)
         {
             DateTime now = DateTime.UtcNow;
-            //If player has never played on server, he is added to the list
-            if (!plugin.ActivityDict.ContainsKey(ev.Player.UserId))
+            //If player has never played on server and he is fine with being tracked, he is added to the list
+            if (!plugin.ActivityDict.ContainsKey(ev.Player.UserId)&&!ev.Player.DoNotTrack)
             {
                 new PlayerActivity(ev.Player);
             }
