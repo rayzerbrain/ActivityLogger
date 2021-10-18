@@ -18,6 +18,6 @@ namespace ActivityLogger
         public int Min_Hours { get; set; } = 10;
         [Description("DECIMAL: Determines how large (in megabytes) the activity file needs to be before hard data cleaning" +
             " occurs on round start. Set to -1 to disable (not recommended, file may get very large). (Default is 5)")]
-        public int Wipe_Limit { get; set; } = 5;
+        public float Wipe_Limit { get; set; } = 5;
     }
 }
