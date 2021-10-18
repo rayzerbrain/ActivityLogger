@@ -90,7 +90,6 @@ namespace ActivityLogger
                     {
                         toRemoveList.Add(plyrRecord.Key);
                     }
-
                 }
             }
             foreach (string playerID in toRemoveList) plugin.ActivityDict.Remove(playerID);
@@ -113,8 +112,7 @@ namespace ActivityLogger
                 //if the player is present in the list, adds the interval in hours to total. then saves the data
                 foreach (Player plyr in Player.List)
                 {
-                    plugin.ActivityDict[plyr.UserId].HoursPlayed 
-                        += (float)sw.Elapsed.TotalHours;
+                    if(!plyr.DoNotTrack) plugin.ActivityDict[plyr.UserId].HoursPlayed += (float)sw.Elapsed.TotalHours;
                 }
                 if (i % saveEvery == 0) plugin.SaveDataFile();
             }
