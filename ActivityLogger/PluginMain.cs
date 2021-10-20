@@ -14,7 +14,7 @@ namespace ActivityLogger
         private static PluginMain Singleton;
         //what the heck is a =>
         public static PluginMain Instance => Singleton;
-        public override Version Version => new Version(4, 0, 0);
+        public override Version Version => new Version(4, 1, 0);
         public override Version RequiredExiledVersion => new Version(3, 0, 0);
         public override string Author => "rayzer";
         public override string Name => "ActivityLogger";
