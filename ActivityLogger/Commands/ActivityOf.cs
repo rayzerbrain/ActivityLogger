@@ -60,6 +60,7 @@ namespace ActivityLogger.Commands
                 {
                     topRecords.Add(new ActivityRecord());
                 }
+                int lastIndex = topRecords.Count;
                 foreach (ActivityRecord record in PluginMain.Instance.ActivityDict.Values)
                 {
                     foreach (ActivityRecord topRecord in topRecords)
@@ -69,7 +70,7 @@ namespace ActivityLogger.Commands
                         if (topRecord.HoursPlayed<record.HoursPlayed)
                         {
                             topRecords.Insert(topRecords.IndexOf(topRecord), record);
-                            topRecords.RemoveAt(topRecords.Count - 1);
+                            topRecords.RemoveAt(lastIndex);
                             break;
                         }
                     }
