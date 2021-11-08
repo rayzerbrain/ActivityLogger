@@ -9,14 +9,14 @@ namespace ActivityLogger.Commands
     {
         public string Command { get; } = "myactivity";
 
-        public string[] Aliases { get; } = { "ma" };
+        public string[] Aliases { get; } = { "myact" };
 
         public string Description { get; } = "Gets info about your activity on this specific server";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player asker = Player.Get(sender);
-            if(arguments.Count==0)
+            if(arguments.Count!=0)
             {
                 response = "Error, usage is: .myactivity";
                 return false;

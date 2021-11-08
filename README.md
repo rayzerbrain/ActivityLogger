@@ -1,7 +1,7 @@
 # ActivityLogger
 SCP:SL Exiled plugin that logs a specific players total time on a server and saves that information to a file, which can be utilized with a command. (Made for server: The Crypt)
 ### IMPORTANT
-As of 3.0.0 this plugin uses exiled permissions. The permission for using the activityof, or aof command is al.get. To learn how to add permissions or the actual plugin go to the exiled discord or something.
+As of version 3.0.0 this plugin uses exiled permissions. The permission for using the activityof, or aof command is al.get. To learn how to add permissions or the actual plugin go to the exiled discord or something.
 ### In-Depth Information
 This plugin logs all players' total time spent on the server and can also tell you time spent in the last x days, where x is a number of your choosing.
 There is a separate file for each server (if you have multiple), so to see total time across all servers you will have to manually add them up (folder with all files located in the exiled configs folder).
@@ -12,11 +12,17 @@ AKA: aof [playerNickname/userId]</b>
    
 This is the main command and method of retrieving data of a player. Returns multiple sets of data if players with the same username are found. Also returns names of players that contain the input (e.g. if you type "a" it will display all nicknames with "a" in it, up to 20). IF no parameters are given, it will display a leaderboard of people with the most hours on the server, the length of which is defined in the config file.
 
+<b>aon [date]</b>
+
+Command that grabs server-wide data. Without arguments, it shows unique player count of a certain time span, of which the length is defined in the configuration. It also shows the total combined hours played on the server.
+With an argument of a certain date (murican style: mm/dd/yyyy) provided, it gets the people who played on that day (and how many people total played).
+
 <b>.myactivity
 
 AKA: .ma</b>
 
 Client command that runs similarly to the aof command, but only returns the specific player's activity information, allowing anyone to use it
+
 
 ### Configuration
 All configuration can be found in the usual file
@@ -25,6 +31,7 @@ All configuration can be found in the usual file
 |-----------|---------|-------------|-----------|
 |Is_Enabled|Boolean|true|Determines if the plugin is enabled or not|
 |Days_Counted|Integer|30|Days counted when determining the recent activity of a player|
+|Data_Period_Length|Integer|15|Determines timespan in which unique player count is recorded (e.g. 7 logs and shows weekly unique player count)
 |Leaderboard_Length|Integer|10|Length of the leaderboard of players with the most time|
 |Min_Hours|Integer|10|Minimum amount of hours a player must have to not get hard cleaned (see below)|
 |Wipe_Limit|Decimal|5|Maximum file size (in megabytes) that the data file must be before automatically hard cleaning (see below)

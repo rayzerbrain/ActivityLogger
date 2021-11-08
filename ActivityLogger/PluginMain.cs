@@ -1,20 +1,23 @@
 ﻿using Exiled.API.Features;
 using Exiled.Loader;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using YamlDotNet.Serialization;
 using Player = Exiled.Events.Handlers.Player;
 using Server = Exiled.Events.Handlers.Server;
+using ActivityLogger.API;
 
 namespace ActivityLogger
 {
+    
     public class PluginMain : Plugin<Config>
     {
-        private static PluginMain Singleton;
+        static PluginMain Singleton;
         //what the heck is a =>
         public static PluginMain Instance => Singleton;
-        public override Version Version => new Version(4, 1, 0);
+        public override Version Version => new Version(4, 3, 0);
         public override Version RequiredExiledVersion => new Version(3, 0, 0);
         public override string Author => "rayzer";
         public override string Name => "ActivityLogger";
@@ -25,19 +28,23 @@ namespace ActivityLogger
         internal IDeserializer DataLoader;
         internal ISerializer DataSaver;
         //MAIN DATA SOURCE - Keeps track of all players and their logs, loaded when waiting for players and saved & unloaded on restarts/shutdowns
-        internal Dictionary<string, PlayerActivity> ActivityDict;
+        internal Dictionary<string, ActivityRecord> ActivityDict;
+        internal DateTime FirstLogDate => DateTime.Parse(ActivityDict.ToList()[0].Value.FirstJoin);
+        //new as of 4.2.0, logs server wide information.
+        //saves and loads along side of ActivityDict, but is separate from it so other code doesn't confuse it with a player log
+        internal ActivityRecord serverLog;
         internal long fileSize;
         public override void OnEnabled()
         {
             Singleton = this;
             EventHandler = new EventHandlers(this);
-            ActivityDict = new Dictionary<string, PlayerActivity>();
+            ActivityDict = new Dictionary<string, ActivityRecord>();
             string folderPath = Paths.Configs + "/Player_Activity_Data";
             DataPath = folderPath+"/Port"+Exiled.API.Features.Server.Port+".yml";
             DataLoader = Loader.Deserializer;
             DataSaver = Loader.Serializer;
             if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
-            if (!File.Exists(DataPath))
+            if(!File.Exists(DataPath))
             {
                 Log.Warn("Activity File missing, creating...");
                 SaveDataFile();
@@ -47,12 +54,13 @@ namespace ActivityLogger
         }
         public override void OnDisabled()
         {
-            Log.Info("on disabled called");
             SaveDataFile();
             UnregisterEvents();
             DataPath = null;
             DataLoader = null;
             DataSaver = null;
+            serverLog = null;
+            ActivityDict = null;
             EventHandler = null;
             Singleton = null;
             base.OnDisabled();
@@ -85,10 +93,12 @@ namespace ActivityLogger
                 Log.Error("The data file is null, not saving yet");
                 return;
             }
+            ActivityDict.Add("server", serverLog);
             using (StreamWriter writer = new StreamWriter(DataPath))
             {
                 DataSaver.Serialize(writer, ActivityDict);
             }
+            ActivityDict.Remove("server");
         }
         //Loads data from the path
         public void LoadDataFile()
@@ -101,11 +111,16 @@ namespace ActivityLogger
                 {
                     //Either warns of no data, or loads data successfully
                     if (dataFile.Length == 0) Log.Warn("File has no recorded players, no data will be loaded");
-                    else ActivityDict = DataLoader.Deserialize<Dictionary<string, PlayerActivity>>(reader);
-                    
+                    else
+                    {
+                        ActivityDict = DataLoader.Deserialize<Dictionary<string, ActivityRecord>>(reader);
+                        if (!ActivityDict.ContainsKey("server")) serverLog = new ActivityRecord("server", "server");
+                        else serverLog = ActivityDict["server"];
+                        ActivityDict.Remove("server");
+                    }
                 }
             }
-            else Log.Error("No file was found. Try restarting the server");
+            else Log.Error("No activity file was found. Try restarting the server");
         }
     }
 }

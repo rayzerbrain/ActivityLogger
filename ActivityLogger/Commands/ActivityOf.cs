@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Exiled.Permissions.Extensions;
 using System.Text;
+using ActivityLogger.API;
 
 namespace ActivityLogger.Commands
 {
@@ -17,7 +18,7 @@ namespace ActivityLogger.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!((CommandSender)sender).CheckPermission("al.get"))
+            if (!((CommandSender)sender).CheckPermission("al.players"))
             {
                 response = "Error, you do not have permission to use this command";
                 return false;
@@ -35,7 +36,7 @@ namespace ActivityLogger.Commands
                 StringBuilder leaderboard = new StringBuilder();
                 leaderboard.Append("Showing Leaderboard: ");
                 
-                List<PlayerActivity> topPlayers = new List<PlayerActivity>();
+                List<ActivityRecord> topRecords = new List<ActivityRecord>();
                 
                 //unused algorithm, may or may not be more efficient, but keeping just in case
                 /*double maxHours;
@@ -54,31 +55,30 @@ namespace ActivityLogger.Commands
                     }
                     topPlayers.Add(maxHourPlayer);
                 }*/
-
                 //fills the topPlayers list with dummy values
-                for(int i = 0;i<PluginMain.Instance.Config.Leaderboard_Length;i++)
+                for(int i = 0;i<PluginMain.Instance.Config.LeaderboardLength;i++)
                 {
-                    topPlayers.Add(new PlayerActivity());
+                    topRecords.Add(new ActivityRecord());
                 }
-                foreach (PlayerActivity plyrRecord in PluginMain.Instance.ActivityDict.Values)
+                foreach (ActivityRecord record in PluginMain.Instance.ActivityDict.Values)
                 {
-                    foreach (PlayerActivity topPlayer in topPlayers)
+                    foreach (ActivityRecord topRecord in topRecords)
                     {
                         //if hours of the topplayer is less than the current plyrRecord,
                         //it inserts where the topPlayer was and moves everything down, and deletes last player
-                        if (topPlayer.HoursPlayed<plyrRecord.HoursPlayed)
+                        if (topRecord.HoursPlayed<record.HoursPlayed)
                         {
-                            topPlayers.Insert(topPlayers.IndexOf(topPlayer), plyrRecord);
-                            topPlayers.RemoveAt(topPlayers.Count - 1);
+                            topRecords.Insert(topRecords.IndexOf(topRecord), record);
+                            topRecords.RemoveAt(topRecords.Count - 1);
                             break;
                         }
                     }
                 }
-                const int deciPlaces = 2;
                 
-                for (int i=0;i<topPlayers.Count;i++)
+                const int decimalPlaces = 2;
+                for (int i=0;i<topRecords.Count;i++)
                 {
-                    leaderboard.Append( $"\n{i + 1}: {topPlayers[i].Nickname} ({Math.Round(topPlayers[i].HoursPlayed, deciPlaces)} hours played)");
+                    leaderboard.Append( $"\n{i + 1}: {topRecords[i].Nickname} ({Math.Round(topRecords[i].HoursPlayed, decimalPlaces)} hours played)");
                 }
                 response = leaderboard.ToString();
                 return true;
@@ -86,35 +86,35 @@ namespace ActivityLogger.Commands
             
             StringBuilder input = new StringBuilder();
             foreach(string arg in arguments) input.Append (arg + " ");
+            string inputString = input.ToString().Substring(0, input.Length - 1).ToLower();
 
             const int maxShownNames = 20;
-            string inputString = input.ToString().Substring(0, input.Length - 1).ToLower();
             bool aliasFound = false;
-            Dictionary<string, PlayerActivity> foundPlayers = new Dictionary<string, PlayerActivity>();
+            Dictionary<string, ActivityRecord> foundPlayers = new Dictionary<string, ActivityRecord>();
             List<string> possibleNames = new List<string>();
             List<string> lowerAliases = new List<string>();
 
-            foreach (KeyValuePair<string, PlayerActivity> record in PluginMain.Instance.ActivityDict)
+            foreach (KeyValuePair<string, ActivityRecord> entry in PluginMain.Instance.ActivityDict)
             {
-                if (record.Value.Aliases.Count != 0)
+                if (entry.Value.Aliases.Count != 0)
                 {
                     lowerAliases.Clear();
-                    foreach (string alias in record.Value.Aliases) lowerAliases.Add(alias.ToLower());
+                    foreach (string alias in entry.Value.Aliases) lowerAliases.Add(alias.ToLower());
                 }
                 //to not be case sensitive of course
-                if (record.Key.Equals(inputString) || record.Value.Nickname.ToLower().Equals(inputString))
+                if (entry.Key.Equals(inputString) || entry.Value.Nickname.ToLower().Equals(inputString))
                 {
-                    foundPlayers.Add(record.Key, record.Value);
+                    foundPlayers.Add(entry.Key, entry.Value);
                 }
                 else if (lowerAliases.Contains(inputString))
                 {
-                    possibleNames.Add(record.Value.Nickname);
+                    possibleNames.Add(entry.Value.Nickname);
                     aliasFound = true;
                     lowerAliases.Clear();
                 }
-                else if (record.Value.Nickname.ToLower().Contains(inputString) && possibleNames.Count < maxShownNames)
+                else if (entry.Value.Nickname.ToLower().Contains(inputString) && possibleNames.Count < maxShownNames)
                 {
-                    possibleNames.Add(record.Value.Nickname);
+                    possibleNames.Add(entry.Value.Nickname);
                 }
             }
             //default response
@@ -123,11 +123,11 @@ namespace ActivityLogger.Commands
             {
                 result.Clear();
                 //In the case of multiple players of same name, returns all
-                foreach (KeyValuePair<string, PlayerActivity> plyrRecord in foundPlayers)
+                foreach (KeyValuePair<string, ActivityRecord> record in foundPlayers)
                 {
-                    result.Append( $"\nPLAYER {plyrRecord.Value.Nickname} FOUND OUT OF " +
+                    result.Append( $"\nPLAYER {record.Value.Nickname} FOUND OUT OF " +
                         $"{PluginMain.Instance.ActivityDict.Count} RECORDED PLAYERS WITH ID OF" +
-                        $" {plyrRecord.Key}.\n\nDATA: {plyrRecord.Value.GetInfo()}");
+                        $" {record.Key}.\n\nDATA: {record.Value.GetInfo()}");
                 }
             }
 

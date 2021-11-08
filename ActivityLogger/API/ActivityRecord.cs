@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ActivityLogger
+namespace ActivityLogger.API
 {
-    public class PlayerActivity
+    public class ActivityRecord
     {
-        public PlayerActivity()
+        public ActivityRecord()
         {
             //default constructor go brrrr
         }
@@ -23,35 +23,34 @@ namespace ActivityLogger
         //main constructor, intializes user id, nickname, and date of first join
         //the nickname present when player joins for first time is the only name that will work in the aof command,
         //but entering aliases will result in the original nickname being shown as an alternative
-        public PlayerActivity(Player plyr)
+        public ActivityRecord(string name, string id)
         {
-            Nickname = plyr.Nickname;
+            Nickname = name;
             FirstJoin = DateTime.UtcNow.ToShortDateString();
-            PluginMain.Instance.ActivityDict.Add(plyr.UserId, this);
+            PluginMain.Instance.ActivityDict.Add(id, this);
         }
-
-        public bool IncompleteData()
+        public static bool IncompleteData()
         {
-            if(DateTime.UtcNow.Subtract(FindEarliestLog()).TotalDays < PluginMain.Instance.Config.Days_Counted) return true;
-            return false;
+            DateTime loggingStartDate = PluginMain.Instance.FirstLogDate;
+            return DateTime.UtcNow.Subtract(loggingStartDate).TotalDays > PluginMain.Instance.Config.DaysCounted;
         }
         //returns hours in the past x days, x is determined by config
-        //if no record can be found earlier than x days ago, flags data as incomplete
         public float HoursPreviousDays()
         {
             if (LoggedTimeOnDay.Count == 0) return 0;
             DateTime now = DateTime.UtcNow;
             DateTime targetDate = DateTime.MinValue;
-            DateTime dt;
-            foreach (string record in LoggedTimeOnDay.Keys)
+            DateTime testDate;
+            foreach (string logDate in LoggedTimeOnDay.Keys)
             {
-                Log.Info(record);
-                dt = StringToDate(record);
-                TimeSpan targetTimeSpan = now.Subtract(targetDate);
-                if (now.Subtract(dt).TotalDays < targetTimeSpan.TotalDays)
+                
+                Log.Info(logDate);
+                testDate = DateTime.Parse(logDate);
+                TimeSpan targetTimeSpan = now.Subtract(targetDate); 
+                if (now.Subtract(testDate).TotalDays < targetTimeSpan.TotalDays)
                 {
-                    targetDate = dt;
-                    if(targetTimeSpan.TotalDays < PluginMain.Instance.Config.Days_Counted) break; 
+                    targetDate = testDate;
+                    if(targetTimeSpan.TotalDays < PluginMain.Instance.Config.DaysCounted) break; 
                 }
             }
             Log.Info(targetDate.ToShortDateString());
@@ -69,23 +68,21 @@ namespace ActivityLogger
             {
                 aliasData.Append(" (has gone by: ");
                 foreach (string alias in Aliases)
-                    {aliasData.Append(alias + ", "); }
+                {
+                    aliasData.Append(alias + ", "); 
+                }
                 aliasData.Append(")");
             }
             //if earliest player log isn't older than x days ago, data shows that too
-
             string data = $"Player {Nickname}{aliasData} has played {Math.Round(HoursPlayed, decimalPlaces)}" +
                 $" hours total on this server, and {Math.Round(HoursPreviousDays(), decimalPlaces)}" +
-                $" hours in the last {PluginMain.Instance.Config.Days_Counted} days. Player first joined on {FirstJoin}" +
+                $" hours in the last {PluginMain.Instance.Config.DaysCounted} days. Player first joined on {FirstJoin}" +
                 $", and has played {LoggedTimeOnDay.Count} days out of the last {MaxLogs} days.  \n";
             //executes if data isn't found from player more than x days ago
             if (IncompleteData())
             {
-                int days = PluginMain.Instance.Config.Days_Counted;
-                DateTime log = FindEarliestLog();
-                completeDataInfo = $"Note: Data in past {MaxLogs} days may be incomplete. This could be because" +
-                    $": Player's most recent log is less than {days} days ago,  or the plugin has only recently been " +
-                    $"collecting data. Earliest available data for this player: {log.ToShortDateString()}";
+                completeDataInfo = $"Note: Data in past {MaxLogs} days may be incomplete. This could be because: Plugin " +
+                    $"has only beein collecting data since {PluginMain.Instance.FirstLogDate.ToShortDateString()}. ";
             }
             return data + completeDataInfo;
         }
@@ -95,22 +92,14 @@ namespace ActivityLogger
         {
             DateTime log = DateTime.MaxValue;
             DateTime dt;
-            foreach (string record in LoggedTimeOnDay.Keys)
+            foreach (string logDate in LoggedTimeOnDay.Keys)
             {
-                dt = StringToDate(record);
+                dt = DateTime.Parse(logDate);
                 if (dt.Ticks < log.Ticks) log = dt;
             }
             return log;
         }
 
-        public static int MaxLogs => (int)(PluginMain.Instance.Config.Days_Counted * 1.5);
-        public static DateTime StringToDate(string str)
-        {
-            string[] strPieces = str.Split('/');
-            int month = int.Parse(strPieces[0]);
-            int day = int.Parse(strPieces[1]);
-            int year = int.Parse(strPieces[2]);
-            return new DateTime(year, month, day);
-        }
+        public static int MaxLogs => (int)(PluginMain.Instance.Config.DaysCounted * 1.5);
     }
 }
