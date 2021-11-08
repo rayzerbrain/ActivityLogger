@@ -37,5 +37,5 @@ All configuration can be found in the usual file
 |Wipe_Limit|Decimal|5|Maximum file size (in megabytes) that the data file must be before automatically hard cleaning (see below)
 ### Automatic Data Cleaning
 As of version 4.0.0 data clean automatically on the waiting for players screen. Data will SOFT clean if the size of the data file is less than the Wipe_Limit config value, and HARD clean if the size is greater than that value. On SOFT cleaning, all logs older than 1.5 times the Days_Counted config value will be removed permanently for each recorded player. On HARD cleaning, the soft cleaning process will occur, AND the records of all players whose total time is less than the value of Min_Hours and do NOT have any recorded logs (as a result of soft cleaning) will be removed entirely. Be sure to adjust the values of Min_Hours and Days_Counted accordingly.
-###Contacting info
+### Contacting info
 You can find me on discord (@rayzer#2948) in the EXILED official server or in the scp server I help run: [The Crypt](https://discord.gg/Yw7XHb5xq)
