@@ -15,7 +15,7 @@ This is the main command and method of retrieving data of a player. Returns mult
 <b>aon [date]</b>
 
 Command that grabs server-wide data. Without arguments, it shows unique player count of a certain time span, of which the length is defined in the configuration. It also shows the total combined hours played on the server.
-With an argument of a certain date(murican style: mm/dd/yyyy) provided, it gets the people who played on that day (and how many people total played).
+With an argument of a certain date (murican style: mm/dd/yyyy) provided, it gets the people who played on that day (and how many people total played).
 
 <b>.myactivity
 
