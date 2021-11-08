@@ -31,6 +31,7 @@ All configuration can be found in the usual file
 |-----------|---------|-------------|-----------|
 |Is_Enabled|Boolean|true|Determines if the plugin is enabled or not|
 |Days_Counted|Integer|30|Days counted when determining the recent activity of a player|
+|Data_Period_Length|15|Determines timespan in which unique player count is recorded (e.g. 7 logs and shows weekly unique player count)
 |Leaderboard_Length|Integer|10|Length of the leaderboard of players with the most time|
 |Min_Hours|Integer|10|Minimum amount of hours a player must have to not get hard cleaned (see below)|
 |Wipe_Limit|Decimal|5|Maximum file size (in megabytes) that the data file must be before automatically hard cleaning (see below)
