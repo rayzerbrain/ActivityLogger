@@ -23,7 +23,6 @@ namespace ActivityLogger.Commands
                 return false;
             }
             int period = PluginMain.Instance.Config.DataPeriodLength;
-            // 😂
             switch (arguments.Count)
             {
                 case 0:
