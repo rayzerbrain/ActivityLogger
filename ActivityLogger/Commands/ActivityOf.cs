@@ -60,7 +60,7 @@ namespace ActivityLogger.Commands
                 {
                     topRecords.Add(new ActivityRecord());
                 }
-                int lastIndex = topRecords.Count;
+                int lastIndex = PluginMain.Instance.Config.LeaderboardLength;
                 foreach (ActivityRecord record in PluginMain.Instance.ActivityDict.Values)
                 {
                     foreach (ActivityRecord topRecord in topRecords)
