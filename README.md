@@ -12,7 +12,9 @@ AKA: aof [playerNickname/userId]</b>
    
 This is the main command and method of retrieving data of a player. Returns multiple sets of data if players with the same username are found. Also returns names of players that contain the input (e.g. if you type "a" it will display all nicknames with "a" in it, up to 20). IF no parameters are given, it will display a leaderboard of people with the most hours on the server, the length of which is defined in the config file.
 
-<b>aon [date]</b>
+<b>activityon [date]
+   
+AKA: aon [date]</b>
 
 Command that grabs server-wide data. Without arguments, it shows unique player count of a certain time span, of which the length is defined in the configuration. It also shows the total combined hours played on the server.
 With an argument of a certain date (murican style: mm/dd/yyyy) provided, it gets the people who played on that day (and how many people total played).
