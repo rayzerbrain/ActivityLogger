@@ -92,7 +92,7 @@ namespace ActivityLogger.API
             foreach (string logDate in LoggedTimeOnDay.Keys)
             {
                 dt = DateTime.Parse(logDate);
-                if (dt.Ticks < log.Ticks) log = dt;
+                if (dt.CompareTo(log) < 0) log = dt;
             }
             return log;
         }
