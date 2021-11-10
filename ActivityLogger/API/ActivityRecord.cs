@@ -43,8 +43,6 @@ namespace ActivityLogger.API
             DateTime testDate;
             foreach (string logDate in LoggedTimeOnDay.Keys)
             {
-                
-                Log.Info(logDate);
                 testDate = DateTime.Parse(logDate);
                 TimeSpan targetTimeSpan = now.Subtract(targetDate); 
                 if (now.Subtract(testDate).TotalDays < targetTimeSpan.TotalDays)
@@ -53,7 +51,6 @@ namespace ActivityLogger.API
                     if(targetTimeSpan.TotalDays < PluginMain.Instance.Config.DaysCounted) break; 
                 }
             }
-            Log.Info(targetDate.ToShortDateString());
             return HoursPlayed-LoggedTimeOnDay[targetDate.ToShortDateString()];
         }
 
