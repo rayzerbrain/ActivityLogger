@@ -133,7 +133,7 @@ namespace ActivityLogger
                 dateFloor = now.AddDays(-ActivityRecord.MaxLogs);
                 //if the date of the first log is not longer ago than the oldest date a player log could be, it becomes the first date floor
                 //else, the date floor remains as the farthest back the logs can go, which is (now-maxLogs)
-                if (plugin.FirstLogDate.Ticks > dateFloor.Ticks) dateFloor = plugin.FirstLogDate;
+                if (plugin.FirstLogDate.CompareTo(dateFloor) > 0) dateFloor = plugin.FirstLogDate;
                 serverLog.FirstJoin = dateFloor.ToShortDateString();
             }
             else dateFloor = serverLogDate.AddDays(1);
