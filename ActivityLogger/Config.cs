@@ -13,7 +13,6 @@ namespace ActivityLogger
         [Description("INTEGER: Determines the length of the time period in which server activity is recorded. For example, "+
             "if the value is 7, server log will store total unique player count of each 7-day period. MUST be greater than 1")]
         public int DataPeriodLength { get; set; } = 15;
-        
         [Description("INTEGER: Determines the length of the leaderboard shown when using the activityof command." +
             " without parameters. (Default = 10)")]
         public int LeaderboardLength { get; set; } = 10;
