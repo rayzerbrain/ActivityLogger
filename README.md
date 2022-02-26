@@ -1,5 +1,6 @@
 # ActivityLogger
 SCP:SL Exiled plugin that logs a specific players total time on a server and saves that information to a file, which can be utilized with a command.
+### Archived as of 26/2/2022
 ### IMPORTANT
 As of version 3.0.0 this plugin uses exiled permissions. The permission for using the activityof, or aof command is al.players while the one for the activityon command is al.server. To learn how to add permissions or the actual plugin go to the exiled discord or something.
 ### In-Depth Information
